@@ -255,7 +255,7 @@ summary {
 
 @font-face {
   font-family: "SUIT";
-  src: local("SUIT Variable"), url("/src/assets/fonts/SUIT-Variable.woff2") format("woff2-variations");
+  src: local("SUIT Variable"), url("/fonts/SUIT-Variable.woff2") format("woff2-variations");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -1118,9 +1118,7 @@ a, a:visited {
   position: sticky;
   inset-block-start: 4.8rem;
   width: 12rem;
-  max-height: 100%;
   border-radius: 0.4rem;
-  overflow-y: auto;
 }
 #sideBarMain::-webkit-scrollbar {
   display: none;
@@ -1143,6 +1141,10 @@ a, a:visited {
   border-radius: 25rem;
   background-color: rgb(128, 128, 128);
   overflow: hidden;
+}
+.blog-owner-image-container:focus-within {
+  box-shadow: 0 0 0.8rem rgb(var(--clr-theme)/0.5);
+  transition: box-shadow 0.25s;
 }
 .blog-owner-image-container > .remix {
   position: absolute;
@@ -1171,13 +1173,16 @@ a, a:visited {
   position: absolute;
   inset: 0;
   border-radius: 25rem;
+  background-color: transparent;
+  font-size: var(--fnt-sm);
 }
 #btnShowInfo > span {
   display: none;
 }
 #btnShowInfo:focus {
   border: 0.2rem solid rgb(var(--clr-tint-0));
-  box-shadow: 0 0 0.8rem rgb(var(--clr-theme)/0.5);
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: background-color 0.25s, border 0.25s;
 }
 #btnShowInfo:focus > span {
   display: block;
@@ -1318,18 +1323,17 @@ a, a:visited {
     width: 3.6rem;
     z-index: 2;
   }
-  #btnShowInfo {
-    display: initial;
-    font-size: var(--fnt-sm);
+  .sidebar-hidden {
+    display: none;
   }
-  #btnShowInfo:hover {
-    background-color: rgb(var(--clr-background)/0.5);
+  #btnShowInfo {
+    display: flex;
   }
   #sideBlogInfoContainer {
     position: relative;
     padding-inline: 0;
   }
-  #sideBlogInfoContainer:focus-within .blog-info-container {
+  #sideBlogInfoContainer:focus-within > .blog-info-container {
     display: flex;
     position: absolute;
     inset-block-start: 0.4rem;
@@ -1340,9 +1344,6 @@ a, a:visited {
     background-color: rgb(var(--clr-background)/0.75);
     -webkit-backdrop-filter: blur(0.4rem);
             backdrop-filter: blur(0.4rem);
-  }
-  .sidebar-hidden {
-    display: none;
   }
   .blog-owner-image-container {
     width: 3.6rem;

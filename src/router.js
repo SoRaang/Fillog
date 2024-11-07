@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useLoaderStore } from './stores/isLoading';
+import { useBlogSettingStore } from './stores/blogSettings';
 
 import NotFound from './views/handler/NotFound.vue';
 import Home from './views/Home.vue';
@@ -8,7 +9,8 @@ import FilmList from './views/FilmList.vue';
 import GuestBook from './views/GuestBook.vue';
 import Login from './views/require-auth/Login.vue'
 import Register from './views/require-auth/Register.vue'
-import MyPage from './views/MyPage.vue';
+import MyPage from './views/require-auth/MyPage.vue';
+import Dashboard from './views/admin/Dashboard.vue';
 
 const router = createRouter({ // 라우터 정의
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +35,7 @@ const router = createRouter({ // 라우터 정의
         },
         { // 로그인
             path: '/login',
+            name: 'Login',
             component: Login,
             meta: {
                 breadcrumb: [
@@ -42,6 +45,7 @@ const router = createRouter({ // 라우터 정의
         },
         { // 회원가입
             path: '/register',
+            name: 'Register',
             component: Register,
             meta: {
                 breadcrumb: [
@@ -112,29 +116,29 @@ const router = createRouter({ // 라우터 정의
             }
         },
         { // 마이페이지
-            path: '/mypage',
-            name: 'Mypage',
+            path: '/my-page',
+            name: 'MyPage',
             component: MyPage,
             meta: {
                 breadCrumb: [
-                    { name: 'Mypage' }
+                    { name: 'My Page' }
                 ]
             }
         },
-        { // 글쓴이 정보
-            path: '/userinfo',
-            name: 'Userinfo',
+        { // 사용자 정보
+            path: '/user-info/:id',
+            name: 'UserInfo',
             component: () => import('./views/UserInfo.vue'),
             meta: {
                 breadCrumb: [
-                    { name: 'UserInfo' }
+                    { name: 'User Info' }
                 ]
             }
         },
         { // 관리자 설정
             path: '/settings',
             name: 'Settings',
-            component: () => import('./views/admin/Dashboard.vue'),
+            component: Dashboard,
             meta: {
                 breadCrumb: [
                     { name: 'Dashboard' }
@@ -147,15 +151,17 @@ const router = createRouter({ // 라우터 정의
     }
 });
 
-router.beforeEach((from, to, next) => { // 네비게이션 가드 - 이동 전
+router.beforeEach((from, to, next) => { // 네비게이션 가드 - 이동 전 (라우트 접근 권한 체크 등을 위해 사용)
     const isLoading = useLoaderStore();
+    const blogSettings = useBlogSettingStore();
 
     isLoading.setLoadTrue();
+    blogSettings.setOptions('showSideBar', true);
 
     next();
 });
 
-router.afterEach((from, to, failure) => { // 네비게이션 가드 - 이동 후
+router.afterEach((from, to, failure) => { // 네비게이션 가드 - 이동 후 (라우트 이동 직후 요청 등이 필요할 때 사용)
     const isLoading = useLoaderStore();
 
     isLoading.setLoadFalse();

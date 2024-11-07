@@ -134,7 +134,7 @@
             }, 250);
         });
 
-        window.addEventListener('click', (e) => {
+        window.addEventListener('click', (e) => { // 모바일 상태에서 네비게이션 바깥을 터치할 때 숨기기 위한 펑션
             if (mobileBurgerActive.value === true) {
                 if (!e.target.classList.contains('on') || !e.target.id === 'btnBurger')
 

@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h3>sign up</h3>
+        <h1 class="page-title">회원가입</h1>
 
         <form @submit.prevent="register" class="registerForm">
             <div>
@@ -42,7 +42,11 @@
     import { reactive, ref } from 'vue';
     import { useRouter } from 'vue-router';
     import axios from 'axios';
+    import { useBlogSettingStore } from '../../stores/blogSettings';
 
+    const blogSettings = useBlogSettingStore();
+
+    blogSettings.setOptions('showSideBar', false); // 회원 가입 화면에서 사이드바 숨기기
 
     // 에러 메시지, 성공 메시지 저장
     const errorMessage = ref('');

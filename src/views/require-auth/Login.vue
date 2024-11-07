@@ -1,5 +1,5 @@
 <template>
-    <form id="frmLogin" @submit.prevent="login" class="loginForm">
+    <form id="frmLogin" @submit.prevent="login">
         <h1 class="page-title">로그인</h1>
 
         <div id="loginInputContainer">
@@ -48,14 +48,18 @@
     import { useRouter } from 'vue-router';
     import axios from 'axios';
     import { useUserStore } from '../../stores/userInfo';
+    import { useBlogSettingStore } from '../../stores/blogSettings';
 
     const router = useRouter();
     const currentUser = useUserStore();
+    const blogSettings = useBlogSettingStore();
     const responseMessage = ref(''); // 로그인 결과 메시지
     const loginFormData = ref({ // 로그인 객체
         userAccount: '',
         userPassword: ''
     });
+
+    blogSettings.setOptions('showSideBar', false); // 로그인 화면에서 사이드바 숨기기
 
     const login = async () => {
         try {

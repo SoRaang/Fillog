@@ -7,7 +7,7 @@
         </div>
 
         <div class="user-info-container" v-else>
-            <ButtonWithIcon element-id="btnConfig" icon-position="only" icon-name="user-fill" @click="router.push('/mypage')">
+            <ButtonWithIcon element-id="btnConfig" icon-position="only" icon-name="user-fill" @click="router.push('/my-page')">
                 사용자 설정
             </ButtonWithIcon>
 

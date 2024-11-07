@@ -27,7 +27,7 @@
         </div> <!-- #sideBlogInfoContainer -->
 
         <div id="sideBlogControls">
-            <button type="button" class="buttons-blog-control" @click="router.push('/userinfo');">
+            <button type="button" class="buttons-blog-control" @click="router.push(`/user-info/${ blogAdmin.adminID }`);">
                 <svg class="remix">
                     <use xlink:href="/miscs/remixicon.symbol.svg#ri-user-search-fill"></use>
                 </svg>
@@ -43,7 +43,7 @@
                 <span>글쓰기</span>
             </button>
 
-            <button type="button" class="buttons-blog-control" v-else @click="followFn">
+            <button type="button" class="buttons-blog-control" v-else @click="console.log(blogAdmin.adminID)">
                 <svg class="remix">
                     <use :xlink:href="`/miscs/remixicon.symbol.svg#ri-${ didIFollowed ? 'dislike-fill' : 'heart-add-fill' }`"></use>
                 </svg>
@@ -59,7 +59,7 @@
                 <span>블로그 관리</span>
             </button>
 
-            <button type="button" class="buttons-blog-control" v-else>
+            <button type="button" class="buttons-blog-control" v-else @click="console.log(blogAdmin.blogInfo)">
                 <svg class="remix">
                     <use xlink:href="/miscs/remixicon.symbol.svg#ri-information-2-fill"></use>
                 </svg>
@@ -106,7 +106,6 @@
     import articleCategory from '../datas/articleCategory.json';
 
     const router = useRouter();
-    const isAdmin = ref(false); // 사용자 권한 체크
     const currentUser = useUserStore();
     const blogAdmin = ref(await getAdminInfo()); // 블로그 관리자 정보 가져오기
     const postData = ref(await getTotalPosts()); // 최근 게시물 출력을 위한 게시물 가져오기
@@ -120,50 +119,4 @@
 
         return item;
     });
-
-    // 서버에서 사용자 정보 가져옴
-    const getUserProfile = async () => {
-        try {
-            const token = localStorage.getItem('token'); // 저장된 토큰 가져오기
-
-            if (!token) {
-                throw new Error('사용자 토큰이 없습니다.'); // 토큰이 없으면 오류 발생
-            }
-
-            const response = await axios.get('http://localhost:3000/profile', {
-                headers: {
-                    Authorization: `Bearer ${ token }`, // 토큰을 Authorization 헤더에 추가
-                },
-            });
-
-            const userData = response.data;
-
-            // type이 "admin"인지 확인
-            isAdmin.value = userData.user.type === 'admin';
-        } catch(error) {
-            console.error(error);
-        }
-    };
-
-    onMounted(() => {
-        getUserProfile();
-    });
-
-    // 팔로우 기능
-    const followFn = async () => {
-        const url = didIFollowed.value
-            ? `http://localhost:3000/users/${ blogAdmin.adminID }/follow`
-            : `http://localhost:3000/users/${ blogAdmin.adminID }/unfollow`;
-
-        try {
-            await axios.post(url, {
-                userID: blogAdmin.adminID,
-                followerID: currentUser.state.userID
-            });
-            didIFollowed.value = !didIFollowed.value;
-            console.log(!didIFollowed.value ? '언팔 성공' : '팔로우 성공');
-        } catch (err) {
-            console.error(err);
-        }
-    }
 </script> <!-- Logic Ends -->

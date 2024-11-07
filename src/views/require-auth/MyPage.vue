@@ -17,7 +17,7 @@
 
             <button id="editBtn" @click="openModal">프로필 관리</button>
         </div>
- 
+
         <!-- 모달 부분, 프로필 관리 버튼 클릭시 표시 -->
         <div class="modal-wrap" v-show="modalState">
             <div class="modal-container">
@@ -49,22 +49,26 @@
 
         <hr>
 
+        <div class="section-title-bar">
+            관심 포스트
+        </div>
+
+        <PageFilter id="filmGenres" label-icon="article-fill" label-text="글 분류" :filter-array="postFilterArray" :origin-value="'all'" @current-filter="console.log(data)" />
     </div> <!-- #myPage -->
 </template> <!-- Template Ends -->
 
 <script setup>
+    import { onMounted, reactive, ref, computed } from 'vue';
+    import { useRouter } from 'vue-router';
+    import axios from 'axios';
+    import { useUserStore } from '../../stores/userInfo'; // userInfo 스토어 가져오기
 
-import axios from 'axios';
-import {onMounted, reactive, ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { useUserStore } from '../stores/userInfo';  // userInfo 스토어 가져오기
-
-const userStore = useUserStore();  // userInfo 스토어 사용
-const router = useRouter();
-const postFilterArray = [ // 임시 필터 리스트 데이터
+    const router = useRouter();
+    const userStore = useUserStore();  // userInfo 스토어 사용
+    const postFilterArray = [ // 임시 필터 리스트 데이터
         { name: '전체', value: 'all' },
-        { name: '좋아요한', value: 'likedArticles' },
-        { name: '댓글을 작성한', value: 'commentedArticles' }
+        { name: '좋아요', value: 'likedArticles' },
+        { name: '댓글', value: 'commentedArticles' }
     ]
 
     let userInfo = reactive({
@@ -84,16 +88,15 @@ const postFilterArray = [ // 임시 필터 리스트 데이터
     let imageState = ref(false);
     const previewImageUrl = ref(null);
 
-    onMounted(()=>{
-        // 스토어에 값이 존재하지 않을 때
+    onMounted(() => {
         if (!userStore.state) {
             console.error('유저 정보가 스토어에 없습니다.');
-        }else {
+        } else {
             console.log('스토어에 있는 유저정보 사용: ' , userStore.state)
             Object.assign(userInfo, userStore.state);  // 스토어에 저장된 유저 정보를 사용
         }
-    })
- 
+    });
+
     const chooseImg = () => {
         imageState.value = true;
     }
@@ -134,7 +137,6 @@ const postFilterArray = [ // 임시 필터 리스트 데이터
 
     // 모달창 - 확인 버튼
     const saveEditContent = (e)=>{
-        
         modalState.value = false;
         console.log('입력값:', editUserInfo);
         changeUserInfo(editUserInfo)
@@ -144,23 +146,27 @@ const postFilterArray = [ // 임시 필터 리스트 데이터
     const changeUserInfo = async ({ userName, account, userImage }) => {
         try {
             const formData = new FormData();
+
             formData.append('_id', userStore.state.userID);
             formData.append('userName', userName);
             formData.append('account', account);
+
             if (userImage) {
                 formData.append('userImage', userImage);
-            }       
-            const response = await axios.post(`http://localhost:3000/mypage/edit`,formData, {
+            }
+
+            const response = await axios.post(`http://localhost:3000/user-info/edit`, formData, {
                 headers: {
                 'Content-Type': 'multipart/form-data'
                 }
-            })
+            });
+
             console.log('응답 데이터: ', response.data);
             Object.assign(userInfo, response.data); // DB 정보 수정
-            userStore.setUser(response.data);       // 스토어 정보 수정
-            console.log('DB,userInfo store 수정 완료');
-        }catch(err){
-            console.error(err);
+            userStore.setUser(response.data); // 스토어 정보 수정
+            console.log('DB, userInfo store 수정 완료');
+        } catch(error) {
+            console.error(error);
         }
     }
 </script> <!-- Logic Ends -->
