@@ -59,7 +59,7 @@
                 <span>블로그 관리</span>
             </button>
 
-            <button type="button" class="buttons-blog-control" v-else @click="console.log(blogAdmin.blogInfo)">
+            <button type="button" class="buttons-blog-control" v-else @click="router.push('/blog-info')">
                 <svg class="remix">
                     <use xlink:href="/miscs/remixicon.symbol.svg#ri-information-2-fill"></use>
                 </svg>
@@ -97,9 +97,8 @@
 </template> <!-- Template Ends -->
 
 <script setup>
-    import { ref, onMounted } from 'vue';
+    import { ref } from 'vue';
     import { useRouter, RouterLink } from 'vue-router';
-    import axios from 'axios';
     import { getAdminInfo, getTotalPosts, movieCategories, getArticleRepliesAll } from '../utilities/dataQueries';
     import { useUserStore } from '../stores/userInfo';
     import dateFormat from '../utilities/dateFormat';

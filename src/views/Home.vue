@@ -40,8 +40,10 @@
 
 <script setup>
     import { ref } from 'vue';
+    import { useModal } from 'vue-final-modal';
     import { getTotalPosts } from '../utilities/dataQueries';
     import dateFormat from '../utilities/dateFormat';
+    import CustomAlert from '../components/CustomAlert.vue';
 
     const postData = await getTotalPosts();
     const latestPosts = postData.slice(0, 5); // 가장 최근 글
@@ -61,4 +63,15 @@
             el: '.hero-slider-pagination',
         }
     };
+
+    const { open, close } = useModal({
+        component: CustomAlert,
+        attrs: {
+            onConfirm(data) {
+                console.log(data);
+
+                close();
+            }
+        }
+    });
 </script> <!-- Logic Ends -->

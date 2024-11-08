@@ -54,7 +54,8 @@
     'views/postEdit',
     'views/filmList',
     'views/guestbookList',
-    'views/userInfo'
+    'views/userInfo',
+    'views/blogInfo'
 ;
 
 // 7. Components
@@ -62,6 +63,7 @@
     'components/buttons',
     'components/formElements',
     'components/spinLoader',
+    'components/customAlert',
     'components/postItem',
     'components/mediaInfo',
     'components/movieFinder',

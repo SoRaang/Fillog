@@ -67,7 +67,7 @@
 
                     <span>최대 3장을 첨부할 수 있어요.</span>
 
-                    <input type="file" name="file-post-image-uploader" id="filePostImages" accept="image/*" ref="file-uploader" @change="changeImage">
+                    <input type="file" name="file-post-image-uploader" id="filePostImages" accept="image/*" ref="fileUploader" @change="changeImage">
                 </div>
 
                 <div class="write-file-preview-container">
@@ -120,7 +120,7 @@
 
     const router = useRouter();
     const blogAdmin = await getAdminInfo();
-    const fileUploader = useTemplateRef('file-uploader'); // input:file 이벤트 추가를 위한 템플릿 레퍼런스
+    const fileUploader = useTemplateRef('fileUploader'); // input:file 이벤트 추가를 위한 템플릿 레퍼런스
     const postFormData = ref({
         title: '',
         category: 0,

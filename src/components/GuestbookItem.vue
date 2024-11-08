@@ -73,7 +73,7 @@
     const props = defineProps([ 'guestObject' ]);
     const setReplyStatus = ref(false);
     const isUser = false; // 임시 로그인 사용자
-    const thisUser = await getUserInfo(props.guestObject.writtenUser.userID);
+    const thisUser = props.guestObject.writtenUser.userID ? await getUserInfo(props.guestObject.writtenUser.userID) : null;
     const thisReplies = props.guestObject.replies.length > 0 ? ref(await getGuestbookReplies(props.guestObject._id)) : null;
 
     const guestReplyHandler = () => { // 방명록 댓글 작성

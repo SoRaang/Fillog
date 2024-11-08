@@ -12,10 +12,12 @@
         </div>
 
         <div class="infoList">
-            <p class="infoContent">{{ userInfo.userName }}</p>
-            <p class="infoContent">{{ userInfo.account }}</p>
+            <p class="infoContent">{{ userInfo.userName ?? '(알 수 없음)' }}</p>
+            <p class="infoContent">{{ userInfo.account ?? 'example@email.com' }}</p>
 
-            <button id="editBtn" @click="openModal">프로필 관리</button>
+            <ButtonWithIcon @click="openModal">
+                프로필 관리
+            </ButtonWithIcon>
         </div>
 
         <!-- 모달 부분, 프로필 관리 버튼 클릭시 표시 -->
@@ -58,7 +60,7 @@
 </template> <!-- Template Ends -->
 
 <script setup>
-    import { onMounted, reactive, ref, computed } from 'vue';
+    import { reactive, ref } from 'vue';
     import { useRouter } from 'vue-router';
     import axios from 'axios';
     import { useUserStore } from '../../stores/userInfo'; // userInfo 스토어 가져오기
@@ -71,31 +73,22 @@
         { name: '댓글', value: 'commentedArticles' }
     ]
 
-    let userInfo = reactive({
+    const userInfo = reactive({
         userImage: null,
         account: '',
         userName: '',
         commentedArticles: ''
     });
 
-    let editUserInfo = reactive({
+    const editUserInfo = reactive({
         userName: '',
         account: '',
         userImage: null,
     });
 
-    let modalState = ref(false);
-    let imageState = ref(false);
+    const modalState = ref(false);
+    const imageState = ref(false);
     const previewImageUrl = ref(null);
-
-    onMounted(() => {
-        if (!userStore.state) {
-            console.error('유저 정보가 스토어에 없습니다.');
-        } else {
-            console.log('스토어에 있는 유저정보 사용: ' , userStore.state)
-            Object.assign(userInfo, userStore.state);  // 스토어에 저장된 유저 정보를 사용
-        }
-    });
 
     const chooseImg = () => {
         imageState.value = true;
@@ -131,7 +124,7 @@
     // 모달창 - X 버튼
     const closeModal = ()=>{
         modalState.value = false;
-        previewImageUrl = false;
+        previewImageUrl.value = false;
         imageState.value = false;
     }
 

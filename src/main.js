@@ -1,11 +1,13 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import { createVfm } from 'vue-final-modal';
 import { register } from 'swiper/element/bundle';
 import VueDOMPurifyHTML from 'vue-dompurify-html'; // v-html 디렉티브에서 해로운 요소 제거
 
 // Import --- System
 
 import router from './router';
+import 'vue-final-modal/style.css';
 import './assets/stylesheets/style.css';
 
 // Import --- Defaults
@@ -14,6 +16,7 @@ import App from './App.vue';
 
 const myProject = createApp(App);
 const pinia = createPinia();
+const vfm = createVfm();
 
 register(); // Swiper Element 등록
 
@@ -61,6 +64,7 @@ if (!!fillogSettings === true && fillogSettings.useDarkTheme === true) { // 다�
 
 myProject
     .use(pinia)
+    .use(vfm)
     .use(router)
     .use(VueDOMPurifyHTML)
     .mount('#app')

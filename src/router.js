@@ -10,6 +10,7 @@ import GuestBook from './views/GuestBook.vue';
 import Login from './views/require-auth/Login.vue'
 import Register from './views/require-auth/Register.vue'
 import MyPage from './views/require-auth/MyPage.vue';
+import BlogInfo from './views/BlogInfo.vue';
 import Dashboard from './views/admin/Dashboard.vue';
 
 const router = createRouter({ // 라우터 정의
@@ -68,6 +69,7 @@ const router = createRouter({ // 라우터 정의
                 },
                 { // 개별 포스트 자세히 보기
                     path: ':postID',
+                    name: 'Posts > Detail',
                     component: () => import('./views/PostDetail.vue'),
                     meta: {
                         breadcrumb: [
@@ -77,6 +79,7 @@ const router = createRouter({ // 라우터 정의
                 },
                 { // 포스트 작성
                     path: 'write',
+                    name: 'Posts > Write',
                     component: () => import('./views/require-auth/PostWrite.vue'),
                     meta: {
                         breadcrumb: [
@@ -86,6 +89,7 @@ const router = createRouter({ // 라우터 정의
                 },
                 { // 포스트 수정
                     path: 'edit/:postID',
+                    name: 'Posts > Edit',
                     component: () => import('./views/PostEdit.vue'),
                     meta: {
                         breadcrumb: [
@@ -115,9 +119,9 @@ const router = createRouter({ // 라우터 정의
                 ]
             }
         },
-        { // 마이페이지
+        { // 마이 페이지
             path: '/my-page',
-            name: 'MyPage',
+            name: 'My Page',
             component: MyPage,
             meta: {
                 breadCrumb: [
@@ -127,11 +131,21 @@ const router = createRouter({ // 라우터 정의
         },
         { // 사용자 정보
             path: '/user-info/:id',
-            name: 'UserInfo',
+            name: 'User Info',
             component: () => import('./views/UserInfo.vue'),
             meta: {
                 breadCrumb: [
                     { name: 'User Info' }
+                ]
+            }
+        },
+        { // 블로그 정보
+            path: '/blog-info',
+            name: 'Blog Info',
+            component: BlogInfo,
+            meta: {
+                breadCrumb: [
+                    { name: 'Blog Info' }
                 ]
             }
         },

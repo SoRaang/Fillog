@@ -13,9 +13,12 @@
 
     <SpinLoader :isLoading="isLoading.state" />
     <FloatingButton />
+    <ModalsContainer />
+    <ImageViewer />
 </template> <!-- Template Ends -->
 
 <script setup>
+    import { ModalsContainer } from 'vue-final-modal';
     import { useLoaderStore } from '../stores/isLoading';
     import { useBlogSettingStore } from '../stores/blogSettings';
     import HeadPrimary from './HeadPrimary.vue';
