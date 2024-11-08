@@ -1,6 +1,6 @@
 /* _customAlert.scss */
 
-#stormCaller {
+.modal-main {
     --modal-urgent-color: var(--clr-if-60);
 
     position: fixed;
@@ -46,9 +46,15 @@
 .modal-title-bar {
     display: flex;
     align-items: center;
+    gap: .4rem;
     padding: .8rem;
     font-size: var(--fnt-sm);
     text-transform: capitalize;
+
+    > span {
+        font-weight: 900;
+        opacity: .5;
+    }
 }
 
 .modal-message-container {

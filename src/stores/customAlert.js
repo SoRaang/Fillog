@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 export const useModalStore = defineStore('stormCaller', () => {
     const state = ref({
         alertType: 'confirm', // info, alert, confirm
-        urgentLevel: 'good', // good, low, medium, high
+        urgentLevel: 'low', // good, low, medium, high
         alertMessage: `뭐시기 저시기가 요러조러해서 이러쿵 저러쿵 합니다.\n요렇게 조렇게 조치해야 합니다.\n뭐시기 뭐시기 하시겠습니까?`,
         vfmSettings: {
             hideOverlay: false,

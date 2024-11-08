@@ -2776,6 +2776,7 @@ button {
   --button-surface-color: var(--clr-theme);
   --button-outline-color: 0 0 0 / 0;
   --button-text-color: var(--clr-text-on-tint);
+  --button-hover-color: var(--clr-tint-20);
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -2791,7 +2792,7 @@ button {
   transition: background-color 0.25s;
 }
 .buttons:hover {
-  background-color: rgb(var(--clr-tint-20));
+  background-color: rgb(var(--button-hover-color));
 }
 .buttons:active {
   background-color: rgb(var(--clr-tint-0));
@@ -3380,7 +3381,7 @@ input[type=checkbox]:is([data-checkbox-type=toggle]):focus + label .switch-rail 
 
 /* _spinLoader.scss */
 /* _customAlert.scss */
-#stormCaller {
+.modal-main {
   --modal-urgent-color: var(--clr-if-60);
   position: fixed;
   inset: 0;
@@ -3395,16 +3396,16 @@ input[type=checkbox]:is([data-checkbox-type=toggle]):focus + label .switch-rail 
   box-shadow: 0 1.2rem 2.4rem -0.8rem rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
-#stormCaller.good {
+.modal-main.good {
   --modal-urgent-color: var(--clr-clear);
 }
-#stormCaller.low {
+.modal-main.low {
   --modal-urgent-color: var(--clr-clear);
 }
-#stormCaller.medium {
+.modal-main.medium {
   --modal-urgent-color: var(--clr-warn);
 }
-#stormCaller.high {
+.modal-main.high {
   --modal-urgent-color: var(--clr-alert);
 }
 
@@ -3423,9 +3424,14 @@ input[type=checkbox]:is([data-checkbox-type=toggle]):focus + label .switch-rail 
 .modal-title-bar {
   display: flex;
   align-items: center;
+  gap: 0.4rem;
   padding: 0.8rem;
   font-size: var(--fnt-sm);
   text-transform: capitalize;
+}
+.modal-title-bar > span {
+  font-weight: 900;
+  opacity: 0.5;
 }
 
 .modal-message-container {

@@ -1,5 +1,9 @@
 <template>
     <div id="landingPage">
+        <h1 class="page-title">홈</h1>
+
+        <button @click="open()">asd</button>
+
         <section id="secHero">
             <div class="section-title-bar">
                 최근 작성한 포스트
@@ -67,10 +71,10 @@
     const { open, close } = useModal({
         component: CustomAlert,
         attrs: {
-            onConfirm(data) {
-                console.log(data);
-
+            onConfirm() {
                 close();
+
+                return true;
             }
         }
     });
